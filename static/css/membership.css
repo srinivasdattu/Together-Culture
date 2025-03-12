@@ -1,0 +1,132 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+header nav {
+    background-color: #333;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.hero{
+    text-align: center;
+    color: #fff;
+    background-color: #333;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding-bottom: 150px;
+}
+h2{
+    text-align:center;
+}
+.benefits{
+    display:flex;
+    gap:20px;
+}
+.benefit{
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+}
+.plans{
+    display:flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap:20px;
+}
+.plan{
+    background-color: #fff;
+    padding: 100px;
+    border-radius: 5px;
+}
+.steps{
+    display:flex;
+    justify-content: space-between;
+}
+.login{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+}
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 20px;
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.search-bar {
+    padding: 5px;
+    border: none;
+    border-radius: 3px;
+}
+
+main .event-listings {
+    padding: 20px;
+}
+
+.event {
+    background-color: #fff;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.event h2 {
+    margin-top: 0;
+}
+
+.event button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.event button:hover {
+    background-color: #0056b3;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.footer-links article {
+    flex: 1;
+    padding: 0 20px;
+}
+
+.social-media a {
+    margin: 0 10px;
+}
+
+.social-media img {
+    width: 24px;
+    height: 24px;
+}

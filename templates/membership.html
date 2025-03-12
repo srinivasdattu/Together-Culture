@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Together Culture</title>
+    {% load static %}
+    <link rel="stylesheet" href="{%static 'css/membership.css'%}">
+</head>
+<body>
+    <header>
+       
+        <nav>
+            <h1><b>Together Culture</b></h1>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Plans</a></li>
+                <li><a href="#">Sign Up</a></li>
+                <li><a href="#">Sign In</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="hero">
+            <h1>Join a Community of Creatives Making Change Happen</h1>
+            <p>Empowering a global community of creatives to connect, collaborate, and grow. Whether you're an artist, designer, writer, or entrepreneur, Together Culture is the place for you.</p>
+            <button>Sign Up Now</button>
+        </section>
+        <section class="why-join">
+            <h2>Why Become a Member?</h2>
+            <div class="benefits">
+                <article class="benefit">
+                    <h3>🧑‍🤝‍🧑Community Support</h3>
+                    <p>Connect with like-minded creatives, share ideas, and collaborate on projects.</p>
+                </article>
+                <article class="benefit">
+                    <h3>👑Expert Leadership</h3>
+                    <p>Learn from industry leaders through workshops, webinars, and mentorship programs.</p>
+                </article>
+                <article class="benefit">
+                    <h3>📈Personal/Professional Growth</h3>
+                    <p>Access resources and opportunities to grow your skills and advance your career.</p>
+                </article>
+            </div>
+        </section>
+        <section class="membership-plans">
+            <h2>Choose Your Membership Plan</h2>
+            <div class="plans">
+                <article class="plan">
+                    <h3>Community Member</h3>
+                    <p>Free</p>
+                    <p>Includes community access and virtual events.</p>
+                </article>
+                <article class="plan">
+                    <h3>Key Access Member</h3>
+                    <p>£20/month</p>
+                    <p>Includes all Community Member benefits plus exclusive content and discounts.</p>
+                </article>
+                <article class="plan">
+                    <h3>Creative Workspace</h3>
+                    <p>£50/month</p>
+                    <p>Includes all Key Access Member benefits plus access to physical workspaces.</p>
+                </article>
+            </div>
+        </section>
+        <section class="getting-started">
+            <h2>Getting Started is Simple</h2>
+            <div class="steps">
+                <article>
+                    <h3>Step 1</h3>
+                    <p>Choose your membership plan.</p>
+                </article>
+                <article>
+                    <h3>Step 2</h3>
+                    <p>Create your profile.</p>
+                </article>
+                <article>
+                    <h3>Step 3</h3>
+                    <p>Start exploring and connecting.</p>
+                </article>
+            </div>
+        </section>
+        <section class="create-profile">
+            <h2>Create Your Profile</h2>
+            <div class="login">
+            <form action="#" method="post">
+                <label for="first-name">First Name</label>
+                <input type="text" id="first-name" name="first-name">
+                
+                <label for="last-name">Last Name</label>
+                <input type="text" id="last-name" name="last-name">
+                
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email">
+                
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password">
+                
+                <label for="membership-plan">Membership Plan</label>
+                <select id="membership-plan" name="membership-plan">
+                    <option value="community-member">Community Member</option>
+                    <option value="key-access-member">Key Access Member</option>
+                    <option value="creative-workspace">Creative Workspace</option>
+                </select>
+                
+                <button type="submit">Complete Registration</button>
+            </form>
+        </div>
+        </section>
+        <section class="testimonials">
+            <h2>Testimonials</h2>
+            <div class="testimonial">
+                <p>"Together Culture has connected me with so many amazing creatives. It's truly inspiring!" - Aisha K.</p>
+            </div>
+            <div class="testimonial">
+                <p>"The resources and workshops have taken my career to the next level. Highly recommend!" - Mark L.</p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Together Culture. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Members</title>
+    {% load static %}
+    <link rel="stylesheet" href="{%static 'css/admin-member.css' %}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Community Members</h1>
+            <button class="invite-member">+ Invite Member</button>
+        </header>
+        <section class="filters">
+            <div class="add">
+            <input type="text" placeholder="Search members..." class="search-bar">
+            <button class="filter-button">Filters</button>
+        </div>
+            <div class="filter-options">
+                <fieldset class="filter-group">
+                    <legend>Interests</legend>
+                    <div>
+                        <input type="checkbox" id="caring" name="interests" value="caring">
+                        <label for="caring">Caring</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="sharing" name="interests" value="sharing">
+                        <label for="sharing">Sharing</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="creating" name="interests" value="creating">
+                        <label for="creating">Creating</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="experiencing" name="interests" value="experiencing">
+                        <label for="experiencing">Experiencing</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="working" name="interests" value="working">
+                        <label for="working">Working</label>
+                    </div>
+                </fieldset>
+                <div class="filter-group">
+                    <label for="membership-type">Membership Type</label>
+                    <select id="membership-type" name="membership-type">
+                        <option value="all-members">All Members</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="activity-status">Activity Status</label>
+                    <select id="activity-status" name="activity-status">
+                        <option value="all-status">All Status</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+        <section class="members-list">
+            <article class="member-card">
+                <img src="avatar1.png" alt="Sarah Johnson" class="img">
+                <div class="member-info">
+                    <h2>Sarah Johnson</h2>
+                    <p>Community Member</p>
+                    <p>Interests: Caring, Creating</p>
+                    <button class="view-profile">View Profile</button>
+                    <button class="message">Message</button>
+                </div>
+            </article>
+            <article class="member-card">
+                <img src="avatar2.png" alt="Michael Chen" class="'img">
+                <div class="member-info">
+                    <h2>Michael Chen</h2>
+                    <p>Key Access Member</p>
+                    <p>Interests: Working, Sharing</p>
+                    <button class="view-profile">View Profile</button>
+                    <button class="message">Message</button>
+                </div>
+            </article>
+        </section>
+        <nav class="pagination">
+            <button class="previous">Previous</button>
+            <button class="page-number">1</button>
+            <button class="page-number">2</button>
+            <button class="page-number">3</button>
+            <span>...</span>
+            <button class="page-number">12</button>
+            <button class="next">Next</button>
+        </nav>
+    </div>
+    <div class="footer">
+        <div class="footer-item">
+            <h4>About Us</h4>
+            <p>Building a community of creators and members.</p>
+        </div>
+        <div class="footer-item">
+            <h4>Quick Links</h4>
+            <a href="membership.html"><p>Membership</p></a>
+            <a href="event.html"><p>Events</p></a>
+            <a href="resources.html"><p>Resources</p></a>
+        </div>
+        <div class="footer-item">
+            <h4>Contact</h4>
+            <p>info@community.com</p>
+            <p>+1 (555) 111-4575</p>
+        </div>
+        <div class="footer-item">
+            <h4>© 2023 Community All rights reserved.</h4>
+        </div>
+    </div>
+</body>
+</html>

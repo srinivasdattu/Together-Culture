@@ -1,0 +1,106 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    display: flex;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+}
+
+.user-info {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.user-info img {
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+}
+
+.user-info p {
+    margin: 5px 0;
+}
+
+.user-info h2 {
+    margin: 0;
+}
+
+.nav-menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+.nav-menu ul li {
+    margin: 15px 0;
+}
+
+.nav-menu ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+.user-info p img{
+    margin: 0px 20px 0px 10px;
+    width: 50px;  /* Adjust as needed */
+    height: 50px;
+    border:3px solid #333; /* Ensure it's a perfect circle */
+    border-radius: 50%
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+.benefits-utilization, .events-suggestions {
+    margin-bottom: 20px;
+}
+
+.benefits-utilization h3, .events-suggestions h3 {
+    margin-bottom: 10px;
+}
+
+.benefits-graph {
+    background-color: #e0e0e0;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+}
+
+.events-suggestions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.upcoming-events, .suggested-for-you {
+    width: 48%;
+}
+
+.event, .suggestion {
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.event button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.event button:hover {
+    background-color: #0056b3;
+}
