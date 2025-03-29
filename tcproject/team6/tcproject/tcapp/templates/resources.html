@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Resources</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f8f8f8;
+        text-align: center;
+    }
+    
+    .hero {
+        background-color: #ffffff;
+        padding: 40px 20px;
+    }
+    
+    .hero h1 {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+    
+    .hero p {
+        color: #666;
+    }
+    
+    .hero input {
+        width: 80%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    
+    .filters {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 10px;
+    }
+    
+    .filters button {
+        padding: 8px 15px;
+        border: none;
+        background-color: #ddd;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    
+    .tabs {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        padding: 15px;
+        background-color: #fff;
+        border-bottom: 1px solid #ddd;
+    }
+    
+    .tabs a {
+        text-decoration: none;
+        color: #666;
+        padding: 5px;
+    }
+    
+    .tabs .active {
+        border-bottom: 2px solid black;
+        font-weight: bold;
+    }
+    
+    .featured-video {
+        padding: 20px;
+    }
+    
+    .video-card {
+        background-color: #fff;
+        padding: 20px;
+        width: 80%;
+        margin: auto;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        border-radius: 8px;
+    }
+    
+    .video-thumbnail {
+        width: 100%;
+        height: 150px;
+        background-color: #ddd;
+        border-radius: 8px;
+    }
+    
+    .filters-section {
+        padding: 20px;
+    }
+    
+    .filters-section select, .filter-btn {
+        padding: 8px;
+        margin: 5px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+    
+    .curated-collections {
+        background-color: #fff;
+        padding: 20px;
+        margin-top: 20px;
+    }
+    
+    .collection-card {
+        background-color: #f5f5f5;
+        padding: 15px;
+        margin: auto;
+        width: 80%;
+        border-radius: 8px;
+    }
+    
+    .collection-card a {
+        display: block;
+        margin-top: 10px;
+        color: blue;
+    }
+    
+    .popular-tags {
+        padding: 20px;
+    }
+    
+    .tags {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+    
+    .tags span {
+        background: #ddd;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 12px;
+    }
+    
+    .cta-footer {
+        background-color: black;
+        color: white;
+        padding: 30px;
+        margin-top: 20px;
+    }
+    
+    .cta-footer button {
+        background-color: white;
+        color: black;
+        padding: 10px 15px;
+        border: none;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+    </style><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Resources</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            text-align: center;
+        }
+
+        .hero {
+            background-color: #ffffff;
+            padding: 40px 20px;
+        }
+
+        .hero h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            color: #666;
+        }
+
+        .hero input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .filters button {
+            padding: 8px 15px;
+            border: none;
+            background-color: #ddd;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 15px;
+            background-color: #fff;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .tabs a {
+            text-decoration: none;
+            color: #666;
+            padding: 5px;
+        }
+
+        .tabs .active {
+            border-bottom: 2px solid black;
+            font-weight: bold;
+        }
+
+        .featured-video {
+            padding: 20px;
+        }
+
+        .video-card {
+            background-color: #fff;
+            padding: 20px;
+            width: 80%;
+            margin: auto;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+
+        .video-thumbnail {
+            width: 100%;
+            height: 150px;
+            background-color: #ddd;
+            border-radius: 8px;
+        }
+
+        .filters-section {
+            padding: 20px;
+        }
+
+        .filters-section select, .filter-btn {
+            padding: 8px;
+            margin: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .curated-collections {
+            background-color: #fff;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .collection-card {
+            background-color: #f5f5f5;
+            padding: 15px;
+            margin: auto;
+            width: 80%;
+            border-radius: 8px;
+        }
+
+        .collection-card a {
+            display: block;
+            margin-top: 10px;
+            color: blue;
+        }
+
+        .popular-tags {
+            padding: 20px;
+        }
+
+        .tags {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .tags span {
+            background: #ddd;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+
+        .cta-footer {
+            background-color: black;
+            color: white;
+            padding: 30px;
+            margin-top: 20px;
+        }
+
+        .cta-footer button {
+            background-color: white;
+            color: black;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <h1>Explore All Our Learning Resources</h1>
+        <p>Dive into our full collection of videos, webinars, articles, and resources designed to inspire and educate.</p>
+        <input type="text" placeholder="Search All Content">
+        <div class="filters">
+            <button>By Topic</button>
+            <button>By Type</button>
+            <button>By Date</button>
+        </div>
+    </header>
+
+    <nav class="tabs">
+        <a href="#" class="active">Videos</a>
+        <a href="#">Webinars</a>
+        <a href="#">Articles</a>
+        <a href="#">Resource Library</a>
+    </nav>
+
+    <section class="featured-video">
+        <div class="video-card">
+            <div class="video-thumbnail"></div>
+            <h3>Introduction to Design Thinking</h3>
+            <p>Learn the basics of design thinking methodology.</p>
+        </div>
+    </section>
+
+    <section class="filters-section">
+        <select>
+            <option>Sort by Newest</option>
+            <option>Sort by Oldest</option>
+        </select>
+        <select>
+            <option>All Topics</option>
+            <option>Design</option>
+            <option>Technology</option>
+        </select>
+        <button class="filter-btn">Advanced Filters</button>
+    </section>
+
+    <section class="curated-collections">
+        <h2>Curated Collections</h2>
+        <div class="collection-card">
+            <h3>Sustainability in Creativity</h3>
+            <p>Explore sustainable creative practices.</p>
+            <a href="#">Explore Collection →</a>
+        </div>
+    </section>
+
+    <section class="popular-tags">
+        <h2>Popular Tags</h2>
+        <div class="tags">
+            <span>#Sustainability</span>
+            <span>#CreativeEducation</span>
+            <span>#HumanCentered</span>
+        </div>
+    </section>
+
+    <footer class="cta-footer">
+        <h2>Want More Content?</h2>
+        <p>Become a subscriber and get exclusive learning resources.</p>
+        <button>Become a Member</button>
+    </footer>
+
+</body>
+</html>
+
+</head>
+<body>
+
+    <header class="hero">
+        <h1>Explore All Our Learning Resources</h1>
+        <p>Dive into our full collection of videos, webinars, articles, and resources designed to inspire and educate.</p>
+        <input type="text" placeholder="Search All Content">
+        <div class="filters">
+            <button>By Topic</button>
+            <button>By Type</button>
+            <button>By Date</button>
+        </div>
+    </header>
+
+    <nav class="tabs">
+        <a href="#" class="active">Videos</a>
+        <a href="#">Webinars</a>
+        <a href="#">Articles</a>
+        <a href="#">Resource Library</a>
+    </nav>
+
+    <section class="featured-video">
+        <div class="video-card">
+            <div class="video-thumbnail"></div>
+            <h3>Introduction to Design Thinking</h3>
+            <p>Learn the basics of design thinking methodology.</p>
+        </div>
+    </section>
+
+    <section class="filters-section">
+        <select>
+            <option>Sort by Newest</option>
+            <option>Sort by Oldest</option>
+        </select>
+        <select>
+            <option>All Topics</option>
+            <option>Design</option>
+            <option>Technology</option>
+        </select>
+        <button class="filter-btn">Advanced Filters</button>
+    </section>
+
+    <section class="curated-collections">
+        <h2>Curated Collections</h2>
+        <div class="collection-card">
+            <h3>Sustainability in Creativity</h3>
+            <p>Explore sustainable creative practices.</p>
+            <a href="#">Explore Collection →</a>
+        </div>
+    </section>
+
+    <section class="popular-tags">
+        <h2>Popular Tags</h2>
+        <div class="tags">
+            <span>#Sustainability</span>
+            <span>#CreativeEducation</span>
+            <span>#HumanCentered</span>
+        </div>
+    </section>
+
+    <footer class="cta-footer">
+        <h2>Want More Content?</h2>
+        <p>Become a subscriber and get exclusive learning resources.</p>
+        <button>Become a Member</button>
+    </footer>
+
+</body>
+</html>
