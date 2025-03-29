@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Connections Board</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+        }
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: #f1f1f1;
+            padding: 10px;
+            border-radius: 8px;
+            flex: 1;
+            margin-right: 10px;
+        }
+        .search-bar input {
+            border: none;
+            background: transparent;
+            outline: none;
+            width: 100%;
+        }
+        .button {
+            background: black;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .tabs {
+            display: flex;
+            gap: 20px;
+            padding: 20px 0;
+        }
+        .tab {
+            cursor: pointer;
+            padding-bottom: 5px;
+            border-bottom: 2px solid transparent;
+        }
+        .tab.active {
+            border-bottom: 2px solid black;
+        }
+        .cards-container {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+        }
+        .card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            flex: 1;
+            min-width: 280px;
+        }
+        .tags {
+            display: flex;
+            gap: 5px;
+            margin-top: 10px;
+        }
+        .tag {
+            background: #ddd;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h2>Digital Connections Board</h2>
+            <button class="button">+ Create Post</button>
+        </header>
+        <div class="search-bar">
+            <input type="text" placeholder="Search posts...">
+        </div>
+        <div class="tabs">
+            <span class="tab active">Offers</span>
+            <span class="tab">Requests</span>
+        </div>
+        <section class="cards-container">
+            <div class="card">
+                <h3>Web Development Mentoring</h3>
+                <p>Posted 2 days ago</p>
+                <p>Offering 1-on-1 mentoring sessions in web development. Specializing in React, Node.js, and modern JavaScript.</p>
+                <div class="tags">
+                    <span class="tag">React</span>
+                    <span class="tag">JavaScript</span>
+                    <span class="tag">Node.js</span>
+                </div>
+                <p><strong>Alex Morgan</strong></p>
+                <button class="button">Contact</button>
+            </div>
+            <div class="card">
+                <h3>Graphic Design Services</h3>
+                <p>Posted 3 days ago</p>
+                <p>Professional graphic designer offering logo design, branding, and social media graphics services.</p>
+                <div class="tags">
+                    <span class="tag">Design</span>
+                    <span class="tag">Branding</span>
+                    <span class="tag">Logo</span>
+                </div>
+                <p><strong>Sarah Chen</strong></p>
+                <button class="button">Contact</button>
+            </div>
+            <div class="card">
+                <h3>Photography Sessions</h3>
+                <p>Posted 4 days ago</p>
+                <p>Professional photographer available for portraits, events, and product photography.</p>
+                <div class="tags">
+                    <span class="tag">Photography</span>
+                    <span class="tag">Events</span>
+                    <span class="tag">Portraits</span>
+                </div>
+                <p><strong>Mike Wilson</strong></p>
+                <button class="button">Contact</button>
+            </div>
+        </section>
+        <footer class="footer">
+            &copy; 2025 Digital Connections Board. All rights reserved.
+        </footer>
+    </div>
+</body>
+</html>
