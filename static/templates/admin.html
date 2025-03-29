@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Dashboard</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css'%}">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>AdminPanel</h2>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <a href="admin.html"><li>🔒Dashboard</li></a>
+                    <a href="member.html"><li>🧑‍🤝‍🧑Members</li></a>
+                    <a href="event.html"><li>📆Events</li></a>
+                    <a href="insights.html"><li>📊Insights</li></a>
+                    <a href="admin.html"><li>⚙️Settings</li></a>
+                    <a href="homepage(team6).html"><li>⬅️Logout</li></a>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <h1>Dashboard Overview</h1>
+                <div class="search-box">
+                    <input type="text" placeholder="Search...">
+                </div>
+                <div class="profile">
+                    <img src="https://th.bing.com/th/id/OIP.QxaCP4o4AawPXVMznv1nngHaHa?w=196&h=196&c=7&r=0&o=5&dpr=1.3&pid=1.7" class="img">
+                </div>
+            </header>
+
+            <section class="stats">
+                <div class="stat">
+                    <h2>Total Members</h2>
+                    <p>2,847</p>
+                    <p>+12% from last month</p>
+                </div>
+                <div class="stat">
+                    <h2>Active Events</h2>
+                    <p>156</p>
+                    <p>23 starting this week</p>
+                </div>
+                <div class="stat">
+                    <h2>New Sign-ups</h2>
+                    <p>384</p>
+                    <p>This month</p>
+                </div>
+                <div class="stat">
+                    <h2>Engagement Rate</h2>
+                    <p>78%</p>
+                    <p>+5% from last month</p>
+                </div>
+            </section>
+<div class="recent">
+            <section class="recent-activity">
+                <h2>Recent Activity</h2>
+                <ul > 
+                    <li><img src="https://th.bing.com/th/id/OIP.QxaCP4o4AawPXVMznv1nngHaHa?w=196&h=196&c=7&r=0&o=5&dpr=1.3&pid=1.7" class="img">Sarah Miller joined Creative Workshop - 2 hours ago</li>
+                    <li><img src="https://th.bing.com/th/id/OIP.QxaCP4o4AawPXVMznv1nngHaHa?w=196&h=196&c=7&r=0&o=5&dpr=1.3&pid=1.7"  class="img">John Doe booked Community Meet - 5 hours ago</li>
+                    <li><img src="https://th.bing.com/th/id/OIP.QxaCP4o4AawPXVMznv1nngHaHa?w=196&h=196&c=7&r=0&o=5&dpr=1.3&pid=1.7"  class="img">Emma Wilson updated their profile - Yesterday</li>
+                </ul>
+            </section>
+        
+            <section class="member-management">
+                <h2>Member Management</h2>
+                <button>Add New Member</button>
+                <div class="filters">
+                    <button>Caring</button>
+                    <button>Sharing</button>
+                    <button>Creating</button>
+                    <button>Working</button>
+                
+            </div>
+                <div class="member-stats">
+                    <p>Active: 2,453</p>
+                    <p>Pending: 394</p>
+                    <p>Inactive: 128</p>
+                </div>
+            </div>
+            </section>
+
+            <section class="event-participation">
+                <h2>Event Participation</h2>
+                <div class="charts">
+                    <div class="chart">Activity Graph</div>
+                    <div class="chart">Participation Chart</div>
+                </div>
+            </section>
+        <div class="member">
+            <h2><img src="https://th.bing.com/th/id/OIP.QxaCP4o4AawPXVMznv1nngHaHa?w=196&h=196&c=7&r=0&o=5&dpr=1.3&pid=1.7" class="img">Rahul</h2>
+            <div class="accept">
+            <a href="homepage(team6).html" >Decline</a>
+            <a href="member.html" >Accept</a>
+        </div>
+        </div>
+        </main>
+    </div>
+    <div class="footer">
+        <div class="footer-item">
+            <h4>About Us</h4>
+            <p>Building a community of creators and members.</p>
+        </div>
+        <div class="footer-item">
+            <h4>Quick Links</h4>
+            <a href="membership.css"><p>Membership</p></a>
+            <a href="event.html"><p>Events</p></a>
+            <a href="resources.html"><p>Resources</p></a>
+        </div>
+        <div class="footer-item">
+            <h4>Contact</h4>
+            <p>info@community.com</p>
+            <p>+1 (555) 111-4575</p>
+        </div>
+        <div class="footer-item">
+            <h4>© 2023 Community All rights reserved.</h4>
+        </div>
+    </div>
+</body>
+</html>
