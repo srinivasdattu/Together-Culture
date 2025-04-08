@@ -14,6 +14,9 @@ urlpatterns = [
     path('signup/', views.signup, name='signup'),
     path('signin/', views.signin, name='signin'),
     path('admin_signin/', views.admin_signin, name='admin_signin'),
+    path('create_profile/', views.create_profile, name='create_profile'),
+    path('dashboard/', views.dashboard, name='dashboard'),
+    path('profile_settings/', views.member_profile_settings_view, name='member_profile_settings'),
 ]
 
 if settings.DEBUG:
