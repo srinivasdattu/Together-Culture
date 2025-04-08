@@ -1,0 +1,175 @@
+{% extends 'admin_base.html' %}
+
+{% block title %}Create Event{% endblock %}
+
+{% block heading %}
+  Create a New Event
+{% endblock %}
+
+{% block content %}
+  <!-- Container for the Create Event form -->
+  <div style="
+    background-color: #fff;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    padding: 1rem;
+    max-width: 600px;
+    margin: 0 auto;
+  ">
+    <h3 style="margin-bottom: 1rem;">New Event Details</h3>
+
+    <!-- Event Heading -->
+    <label for="eventHeading" style="display: block; margin-bottom: 0.5rem; font-weight: bold;">
+      Event Heading
+    </label>
+    <input
+      type="text"
+      id="eventHeading"
+      style="width: 100%; padding: 0.5rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 4px;"
+      placeholder="Enter event heading"
+      required
+    />
+
+    <!-- Event Description -->
+    <label for="eventDescription" style="display: block; margin-bottom: 0.5rem; font-weight: bold;">
+      Event Description
+    </label>
+    <textarea
+      id="eventDescription"
+      rows="3"
+      style="width: 100%; padding: 0.5rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 4px;"
+      placeholder="Describe the event"
+      required
+    ></textarea>
+
+    <!-- Event Date -->
+    <label for="eventDate" style="display: block; margin-bottom: 0.5rem; font-weight: bold;">
+      Event Date (DD-MM-YYYY)
+    </label>
+    <input
+      type="text"
+      id="eventDate"
+      style="width: 100%; padding: 0.5rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 4px;"
+      placeholder="e.g. 30-04-2025"
+      required
+    />
+
+    <!-- Event Time -->
+    <label for="eventTime" style="display: block; margin-bottom: 0.5rem; font-weight: bold;">
+      Event Time (hh:mm AM/PM)
+    </label>
+    <input
+      type="text"
+      id="eventTime"
+      style="width: 100%; padding: 0.5rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 4px;"
+      placeholder="e.g. 03:00 PM"
+      required
+    />
+
+    <!-- Category -->
+    <label for="categorySelect" style="display: block; margin-bottom: 0.5rem; font-weight: bold;">
+      Category
+    </label>
+    <select
+      id="categorySelect"
+      style="width: 100%; padding: 0.5rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 4px;"
+      required
+    >
+      <option value="">-- Select Category --</option>
+      <option value="ART">Art</option>
+      <option value="MUSIC">Music</option>
+      <option value="TECH">Technology</option>
+      <!-- Add more categories as needed -->
+    </select>
+
+    <!-- Extra -->
+    <label for="extraInfo" style="display: block; margin-bottom: 0.5rem; font-weight: bold;">
+      Extra Info (Optional)
+    </label>
+    <textarea
+      id="extraInfo"
+      rows="2"
+      style="width: 100%; padding: 0.5rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 4px;"
+      placeholder="Additional info (optional)"
+    ></textarea>
+
+    <!-- Create Button -->
+    <button
+      id="createEventBtn"
+      style="background-color: #000; color: #fff; border: none; padding: 0.6rem 1.2rem; border-radius: 4px; cursor: pointer; font-size: 0.95rem;"
+    >
+      Create Event
+    </button>
+
+    <!-- Error / Success Message -->
+    <div
+      id="message"
+      style="margin-top: 1rem; font-weight: bold; display: none;"
+    >
+      <!-- We will populate this dynamically -->
+    </div>
+  </div>
+
+  <script>
+    const createBtn = document.getElementById('createEventBtn');
+    const message = document.getElementById('message');
+
+    createBtn.addEventListener('click', async () => {
+      // Grab form values
+      const heading = document.getElementById('eventHeading').value.trim();
+      const description = document.getElementById('eventDescription').value.trim();
+      const date = document.getElementById('eventDate').value.trim();
+      const time = document.getElementById('eventTime').value.trim();
+      const category = document.getElementById('categorySelect').value;
+      const extra = document.getElementById('extraInfo').value.trim();
+
+      // Basic validation example
+      if (!heading || !description || !date || !time || !category) {
+        showMessage('Please fill out all required fields.', 'red');
+        return;
+      }
+
+      // Construct payload
+      const payload = {
+        event_heading: heading,
+        event_description: description,
+        event_date: date,
+        event_time: time,
+        category: category,
+        extra: extra
+      };
+
+      try {
+        const res = await fetch('http://127.0.0.1:8010/events', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (res.ok) {
+          // On success, you might redirect back to the events page
+          showMessage('Event created successfully!', 'green');
+          setTimeout(() => {
+            window.location.href = "{% url 'admin_events' %}";
+          }, 1000);
+        } else {
+          // On failure, parse the error or show a generic message
+          const errData = await res.json();
+          const errMsg = errData.detail || 'Error creating event.';
+          showMessage(errMsg, 'red');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        showMessage('Request failed. Check console for details.', 'red');
+      }
+    });
+
+    function showMessage(text, color) {
+      message.style.display = 'block';
+      message.style.color = color;
+      message.textContent = text;
+    }
+  </script>
+{% endblock %}

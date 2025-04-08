@@ -1,0 +1,453 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>ContentHub</title>
+  <style>
+    /* Basic Reset/Global Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      background-color: #fff;
+      color: #333;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+    }
+
+    /* Header / Top Bar */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background-color: #fff;
+      border-bottom: 1px solid #eee;
+    }
+    .brand-back {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .brand-back button {
+      background-color: #000;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+    .nav-links a {
+      font-size: 0.95rem;
+      color: #333;
+    }
+    .nav-icons {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    .nav-icons div {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: #ccc;
+    }
+
+    /* Hero Section */
+    .hero {
+      background-color: #000;
+      color: #fff;
+      padding: 3rem 2rem;
+      text-align: left;
+    }
+    .hero h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      font-size: 1rem;
+      color: #ddd;
+      margin-bottom: 2rem;
+      max-width: 400px;
+    }
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+    .hero-buttons button {
+      border: none;
+      cursor: pointer;
+      padding: 0.6rem 1.2rem;
+      border-radius: 4px;
+      font-size: 0.95rem;
+    }
+    .hero-buttons button:first-child {
+      background-color: #fff;
+      color: #000;
+    }
+    .hero-buttons button:last-child {
+      background-color: #333;
+      color: #fff;
+    }
+
+    /* Trending Section */
+    .trending {
+      padding: 2rem;
+    }
+    .trending h2 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+    .filter-tabs {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .filter-tabs button {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .filter-tabs button:hover {
+      background-color: #f3f3f3;
+    }
+
+    .content-cards {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+    .card {
+      background-color: #f9f9f9;
+      border: 1px solid #eee;
+      border-radius: 4px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .card-image {
+      width: 100%;
+      height: 120px;
+      background-color: #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.5rem;
+      border-radius: 4px;
+    }
+    .card-title {
+      font-weight: bold;
+    }
+    .card-meta {
+      font-size: 0.85rem;
+      color: #777;
+    }
+
+    /* Webinars Section */
+    .webinars {
+      padding: 2rem;
+      background-color: #fff;
+    }
+    .webinars h3 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+    .webinar-cards {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+    .webinar-card {
+      background-color: #f9f9f9;
+      border: 1px solid #eee;
+      border-radius: 4px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .webinar-card .title {
+      font-size: 1rem;
+      font-weight: bold;
+    }
+    .webinar-card .info {
+      font-size: 0.85rem;
+      color: #777;
+    }
+    .register-btn {
+      background-color: #000;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+      width: fit-content;
+    }
+
+    /* Resource Library */
+    .resource-library {
+      padding: 2rem;
+    }
+    .resource-library h3 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+    .resource-cards {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+    .resource-card {
+      background-color: #f9f9f9;
+      border: 1px solid #eee;
+      border-radius: 4px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .resource-card h4 {
+      font-weight: bold;
+    }
+    .resource-card p {
+      color: #777;
+      font-size: 0.9rem;
+    }
+    .resource-card a {
+      display: inline-block;
+      color: #000;
+      font-weight: 500;
+      margin-top: 0.5rem;
+    }
+
+    /* CTA Section */
+    .cta-section {
+      background-color: #000;
+      color: #fff;
+      text-align: center;
+      padding: 2rem;
+    }
+    .cta-section h2 {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+    }
+    .cta-section button {
+      background-color: #fff;
+      color: #000;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #f9f9f9;
+      padding: 2rem;
+    }
+    .footer-columns {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 2rem;
+    }
+    .footer-column h4 {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    .footer-column ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .footer-column li a {
+      font-size: 0.9rem;
+      color: #333;
+    }
+    .footer-column li a:hover {
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header / Navigation -->
+  <header>
+    <div class="nav-links">
+      <a href="#">Browse</a>
+      <a href="#">Webinars</a>
+      <a href="#">Resources</a>
+      <a href="#">About</a>
+    </div>
+    <div class="nav-icons">
+      <div title="Search Icon"></div>
+      <div title="User Profile"></div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Explore. Learn. Grow.</h1>
+    <p>Discover inspiring content designed to fuel your creativity and personal growth.</p>
+    <div class="hero-buttons">
+      <button>Start Learning</button>
+      <button>Browse Trending</button>
+    </div>
+  </section>
+
+  <!-- Trending Now -->
+  <section class="trending">
+    <h2>🔥 Trending Now</h2>
+
+    <!-- Filter Tabs -->
+    <div class="filter-tabs">
+      <button>All</button>
+      <button>Videos</button>
+      <button>Webinars</button>
+      <button>Articles</button>
+    </div>
+
+    <div class="content-cards">
+      <!-- Card 1 -->
+      <div class="card">
+        <!-- If you want to see your actual video, place it here: -->
+        <div class="card-image" style="background-color:transparent;">
+          <video width="100%" height="120" controls>
+            <source src="{% static 'main/videos/design_thinking.mp4' %}" type="video/mp4">
+            <!-- Fallback text for older browsers -->
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div class="card-title">Design Thinking Workshop</div>
+        <div class="card-meta">1.2K views • 15 min</div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card">
+        <div class="card-image" style="background-color:transparent;">
+          <video width="100%" height="120" controls>
+            <source src="{% static 'main/videos/leadership_masterclass.mp4' %}" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div class="card-title">Leadership Masterclass</div>
+        <div class="card-meta">2.5K views • 45 min</div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="card">
+        <div class="card-image" style="background-color:transparent;">
+          <video width="100%" height="120" controls>
+            <source src="{% static 'main/videos/leadership_masterclass.mp4' %}" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div class="card-title">Leadership Masterclass</div>
+        <div class="card-meta">2.5K views • 45 min</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Webinars: Learn with Experts -->
+  <section class="webinars">
+    <h3>Webinars: Learn with Experts</h3>
+    <div class="webinar-cards">
+      <div class="webinar-card">
+        <div class="title">Digital Marketing Strategies 2025</div>
+        <div class="info">With John Smith • March 15, 2025</div>
+        <button class="register-btn">Register Now</button>
+      </div>
+      <div class="webinar-card">
+        <div class="title">AI in Business</div>
+        <div class="info">With Sarah Johnson • March 20, 2025</div>
+        <button class="register-btn">Register Now</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Resource Library -->
+  <section class="resource-library">
+    <h3>Resource Library</h3>
+    <div class="resource-cards">
+      <div class="resource-card">
+        <h4>Business Plan Template</h4>
+        <p>Comprehensive guide for startups</p>
+        <a href="#">Download PDF</a>
+      </div>
+      <div class="resource-card">
+        <h4>Marketing Calendar</h4>
+        <p>2025 Planning Template</p>
+        <a href="#">Download Excel</a>
+      </div>
+      <div class="resource-card">
+        <h4>Content Strategy Guide</h4>
+        <p>Step-by-step framework</p>
+        <a href="#">Download Guide</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <h2>Can't Find What You're Looking For?</h2>
+    <button>Explore All Content</button>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-columns">
+      <div class="footer-column">
+        <h4>About</h4>
+        <ul>
+          <li><a href="#">Our Story</a></li>
+          <li><a href="#">Team</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Guides</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="#">Support</a></li>
+          <li><a href="#">Sales</a></li>
+          <li><a href="#">Partners</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Follow Us</h4>
+        <ul>
+          <li><a href="#">Twitter</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

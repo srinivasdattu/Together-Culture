@@ -1,0 +1,112 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+
+{% block title %}Events{% endblock %}
+
+{% block heading %}
+  Events Management
+{% endblock %}
+
+{% block content %}
+  <!-- Filters, Create New Event Button, etc. -->
+  <div class="filters-container" style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin-bottom: 2rem;">
+    <!-- Category filter -->
+    <select id="categorySelect" style="padding: 0.5rem; font-size: 0.95rem; border: 1px solid #ccc; border-radius: 4px;">
+      <option value="">All Categories</option>
+      <option value="ART">Art</option>
+      <option value="MUSIC">Music</option>
+      <option value="TECH">Technology</option>
+      <!-- Add more categories as needed -->
+    </select>
+
+    <a href="{% url 'admin_create_event' %}"
+       class="create-event-btn"
+       style="background-color: #000; color: #fff; border: none; padding: 0.6rem 1rem; border-radius: 4px; cursor: pointer; margin-left: auto; font-size: 0.95rem; text-decoration: none;">
+      + Create New Event
+    </a>
+  </div>
+
+  <!-- Events Grid -->
+  <div class="events-grid" id="eventsGrid"
+       style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.5rem;">
+    <!-- JavaScript populates event cards here -->
+  </div>
+
+  <script>
+    // Map categories to local static images
+    const IMAGE_MAP = {
+      'ART': "{% static 'main/images/art_screenshot1.jpg' %}",
+      'MUSIC': "{% static 'main/images/music_screenshot2.jpg' %}",
+      'TECH': "{% static 'main/images/tech_screenshot3.jpg' %}"
+    };
+    // If you placed your images in a different path, just adjust the paths above.
+
+    const eventsGrid = document.getElementById('eventsGrid');
+    const categorySelect = document.getElementById('categorySelect');
+
+    window.addEventListener('DOMContentLoaded', loadEvents);
+    categorySelect.addEventListener('change', loadEvents);
+
+    async function loadEvents() {
+      const baseUrl = 'http://127.0.0.1:8010/events';
+      const selectedCategory = categorySelect.value;
+      const fetchUrl = selectedCategory ? `${baseUrl}?category=${selectedCategory}` : baseUrl;
+
+      try {
+        const res = await fetch(fetchUrl);
+        if (!res.ok) {
+          console.error('Error fetching events:', res.statusText);
+          return;
+        }
+        const eventsData = await res.json();
+        renderEvents(eventsData);
+      } catch (err) {
+        console.error('Error:', err);
+      }
+    }
+
+    function renderEvents(events) {
+      eventsGrid.innerHTML = '';
+
+      events.forEach(event => {
+        const card = document.createElement('div');
+        card.className = 'event-card';
+        card.style.backgroundColor = '#f9f9f9';
+        card.style.border = '1px solid #eee';
+        card.style.borderRadius = '4px';
+        card.style.padding = '1rem';
+
+        // Determine local image based on category
+        let imageUrl = IMAGE_MAP[event.category] || '';
+
+        card.innerHTML = `
+          <div style="
+            width: 100%;
+            height: 150px;
+            background-color: #ddd;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 0.9rem;
+          ">
+            ${
+              imageUrl
+                ? `<img src="${imageUrl}" alt="Event Image" style="max-width:100%; max-height:100%; object-fit:cover;" />`
+                : 'Event Image'
+            }
+          </div>
+          <div>
+            <div style="font-size: 0.85rem; color: #777; margin-bottom: 0.5rem;">
+              ${event.event_date} - ${event.event_time}
+            </div>
+            <h3 style="font-size: 1rem; margin-bottom: 0.5rem;">${event.event_heading}</h3>
+            <p style="font-size: 0.9rem; color: #555;">${event.event_description}</p>
+          </div>
+        `;
+        eventsGrid.appendChild(card);
+      });
+    }
+  </script>
+{% endblock %}

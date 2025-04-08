@@ -1,0 +1,371 @@
+{% extends 'member_base.html' %}
+{% load static %}  <!-- 1. Enable Django static tag -->
+
+{% block title %}Events{% endblock %}
+
+{% block content %}
+<!-- Filters & Booking Log Button -->
+<div style="
+  max-width:1200px;
+  margin: 1rem auto;
+  padding: 0 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+">
+  <input
+    type="text"
+    id="dateFilter"
+    placeholder="mm/dd/yyyy"
+    style="padding: 0.5rem; font-size:0.9rem; border:1px solid #ccc; border-radius:4px;"
+  />
+  <select
+    id="categorySelect"
+    style="padding: 0.5rem; font-size:0.9rem; border:1px solid #ccc; border-radius:4px;"
+  >
+    <option value="">All Categories</option>
+    <option value="TECH">TECH</option>
+    <option value="ART">ART</option>
+    <option value="Party">Party</option>
+    <option value="MUSIC">MUSIC</option>
+  </select>
+  <select
+    id="sortSelect"
+    style="padding: 0.5rem; font-size:0.9rem; border:1px solid #ccc; border-radius:4px;"
+  >
+    <option value="popular">Sort by: Popular</option>
+    <option value="date">Sort by: Date</option>
+  </select>
+
+  <!-- Booking Log Button -->
+  <button
+    id="bookingLogBtn"
+    style="
+      margin-left:auto;
+      background-color:#000;
+      color:#fff;
+      border:none;
+      padding:0.5rem 1rem;
+      border-radius:4px;
+      cursor:pointer;
+      font-size:0.9rem;
+    "
+  >
+    Booking Log
+  </button>
+</div>
+
+<!-- Events Grid -->
+<div
+  id="eventsGrid"
+  style="
+    max-width:1200px;
+    margin:1rem auto;
+    padding:0 1rem;
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px,1fr));
+    gap:1.5rem;
+  "
+></div>
+
+<!-- Booking Log Modal/Popup -->
+<div
+  id="bookingLogModal"
+  style="
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100vw;
+    height:100vh;
+    background-color: rgba(0,0,0,0.5);
+    align-items:center;
+    justify-content:center;
+  "
+>
+  <div
+    style="
+      background-color:#fff;
+      padding:2rem;
+      border-radius:8px;
+      max-width:600px;
+      width:90%;
+      position:relative;
+    "
+  >
+    <h2 style="margin-bottom:1rem;">Previous Bookings</h2>
+    <div id="bookingLogContent" style="max-height:300px; overflow-y:auto;"></div>
+
+    <button
+      id="closeLogBtn"
+      style="
+        position:absolute;
+        top:1rem;
+        right:1rem;
+        background:none;
+        border:none;
+        font-size:1rem;
+        cursor:pointer;
+      "
+    >
+      ✕
+    </button>
+  </div>
+</div>
+
+<!-- Event Detail Modal -->
+<div
+  id="eventDetailModal"
+  style="
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100vw;
+    height:100vh;
+    background-color: rgba(0,0,0,0.5);
+    align-items:center;
+    justify-content:center;
+  "
+>
+  <div
+    style="
+      background-color:#fff;
+      padding:2rem;
+      border-radius:8px;
+      max-width:600px;
+      width:90%;
+      position:relative;
+    "
+  >
+    <button
+      id="closeDetailBtn"
+      style="
+        position:absolute;
+        top:1rem;
+        right:1rem;
+        background:none;
+        border:none;
+        font-size:1rem;
+        cursor:pointer;
+      "
+    >
+      ✕
+    </button>
+    <div id="eventDetailContent"></div>
+  </div>
+</div>
+
+<script>
+  // 2. Define local images for each category
+  const IMAGE_MAP = {
+    'TECH':   "{% static 'main/images/tech_screenshot3.jpg' %}",
+    'ART':    "{% static 'main/images/art_screenshot1.jpg' %}",
+    'Party':  "{% static 'main/images/party_screenshot4.jpg' %}",
+    'MUSIC':  "{% static 'main/images/music_screenshot2.jpg' %}"
+  };
+
+  // Grab references
+  const eventsGrid         = document.getElementById('eventsGrid');
+  const categorySelect     = document.getElementById('categorySelect');
+  const bookingLogBtn      = document.getElementById('bookingLogBtn');
+  const bookingLogModal    = document.getElementById('bookingLogModal');
+  const bookingLogContent  = document.getElementById('bookingLogContent');
+  const closeLogBtn        = document.getElementById('closeLogBtn');
+  const eventDetailModal   = document.getElementById('eventDetailModal');
+  const eventDetailContent = document.getElementById('eventDetailContent');
+  const closeDetailBtn     = document.getElementById('closeDetailBtn');
+
+  // Example: store user email in localStorage
+  const userEmail = localStorage.getItem('user_email') || '';
+
+  // 1. On page load, fetch events
+  window.addEventListener('DOMContentLoaded', loadEvents);
+  // 2. On category change, re-load
+  categorySelect.addEventListener('change', loadEvents);
+  // 3. Booking Log button
+  bookingLogBtn.addEventListener('click', showBookingLog);
+  // 4. Close booking log modal
+  closeLogBtn.addEventListener('click', () => {
+    bookingLogModal.style.display = 'none';
+  });
+  // 5. Close event detail modal
+  closeDetailBtn.addEventListener('click', () => {
+    eventDetailModal.style.display = 'none';
+  });
+
+  async function loadEvents() {
+    if (!userEmail) {
+      console.error('No user email found; cannot fetch events properly.');
+      return;
+    }
+    let baseUrl = 'http://127.0.0.1:8010/event_booker';
+    const selectedCategory = categorySelect.value;
+    let fullUrl = `${baseUrl}?email=${encodeURIComponent(userEmail)}`;
+    if (selectedCategory) {
+      fullUrl += `&category=${encodeURIComponent(selectedCategory)}`;
+    }
+    try {
+      const res = await fetch(fullUrl, { method:'GET' });
+      if (!res.ok) {
+        console.error('Error fetching events:', res.statusText);
+        return;
+      }
+      const eventsData = await res.json();
+      renderEvents(eventsData);
+    } catch (err) {
+      console.error('Error:', err);
+    }
+  }
+
+  function renderEvents(events) {
+    eventsGrid.innerHTML = ''; // Clear existing
+
+    events.forEach(evt => {
+      const card = document.createElement('div');
+      card.style.backgroundColor = '#fff';
+      card.style.border = '1px solid #eee';
+      card.style.borderRadius = '4px';
+      card.style.overflow = 'hidden';
+      card.style.padding = '1rem';
+      card.style.cursor = 'pointer';
+      card.style.textAlign = 'center';
+
+      // 3. Use local image if category matches
+      let imgUrl = IMAGE_MAP[evt.category] || '';
+
+      card.innerHTML = `
+        <div style="
+          width: 100%;
+          height: 150px;
+          background-color: #ddd;
+          margin-bottom: 1rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #666;
+          font-size: 0.9rem;
+        ">
+          ${
+            imgUrl
+              ? `<img src="${imgUrl}" alt="Event Image" style="max-width:100%; max-height:100%; object-fit:cover;" />`
+              : 'Event'
+          }
+        </div>
+        <h3 style="font-size:1rem; margin-bottom:0.5rem;">${evt.event_heading}</h3>
+      `;
+
+      card.addEventListener('click', () => {
+        openDetailModal(evt);
+      });
+
+      eventsGrid.appendChild(card);
+    });
+  }
+
+  function openDetailModal(evt) {
+    // 4. Show a bigger image in the modal
+    const imgUrl = IMAGE_MAP[evt.category] || '';
+    eventDetailContent.innerHTML = `
+      <div style="width: 100%; height: 200px; background-color: #ddd; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; color: #666; font-size: 0.9rem;">
+        ${
+          imgUrl
+            ? `<img src="${imgUrl}" alt="Event Image" style="max-width:100%; max-height:100%; object-fit:cover;" />`
+            : 'Event Image'
+        }
+      </div>
+      <h3 style="font-size:1.2rem; margin-bottom:0.5rem;">${evt.event_heading}</h3>
+      <div style="font-size:0.85rem; color:#777; margin-bottom:0.5rem;">
+        ${evt.event_date} • ${evt.event_time}
+      </div>
+      <p style="font-size:0.9rem; color:#555; margin-bottom:1rem;">${evt.event_description}</p>
+      <button id="modalBookBtn" style="
+        background-color:#000;
+        color:#fff;
+        border:none;
+        padding:0.5rem 1rem;
+        border-radius:4px;
+        cursor:pointer;
+        font-size:0.9rem;
+      ">Book Now</button>
+    `;
+    // Book Now logic
+    const modalBookBtn = document.getElementById('modalBookBtn');
+    modalBookBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      bookEvent(evt.event_id, evt.event_heading);
+    });
+    // Show the modal
+    eventDetailModal.style.display = 'flex';
+  }
+
+  async function bookEvent(eventId, eventHeading) {
+    if (!userEmail) {
+      alert('No user email found; cannot book event.');
+      return;
+    }
+    const postUrl = 'http://127.0.0.1:8010/event_booker';
+    const payload = {
+      event_id: eventId,
+      email: userEmail,
+      event_heading: eventHeading
+    };
+    try {
+      const res = await fetch(postUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (!res.ok) {
+        console.error('Error booking event:', res.statusText);
+        alert('Failed to book event. Please try again.');
+        return;
+      }
+      alert('Event booked successfully!');
+    } catch (err) {
+      console.error('Error booking event:', err);
+      alert('Failed to book event. Please try again.');
+    }
+  }
+
+  async function showBookingLog() {
+    if (!userEmail) {
+      alert('No user email found; cannot load booking log.');
+      return;
+    }
+    const logUrl = `http://127.0.0.1:8010/event_booker/log?email=${encodeURIComponent(userEmail)}`;
+    try {
+      const res = await fetch(logUrl, { method: 'GET' });
+      if (!res.ok) {
+        console.error('Error getting booking log:', res.statusText);
+        alert('Failed to load booking log.');
+        return;
+      }
+      const logs = await res.json();
+      renderBookingLog(logs);
+      bookingLogModal.style.display = 'flex';
+    } catch (err) {
+      console.error('Error loading booking log:', err);
+    }
+  }
+
+  function renderBookingLog(logs) {
+    bookingLogContent.innerHTML = '';
+    if (!logs.length) {
+      bookingLogContent.innerHTML = '<p>No previous bookings found.</p>';
+      return;
+    }
+    logs.forEach(item => {
+      const div = document.createElement('div');
+      div.style.borderBottom = '1px solid #eee';
+      div.style.padding = '0.5rem 0';
+      div.innerHTML = `
+        <p style="margin:0;"><strong>Event:</strong> ${item.event_heading}</p>
+        <p style="margin:0; color:#777;"><small>Booked At: ${item.booked_at}</small></p>
+      `;
+      bookingLogContent.appendChild(div);
+    });
+  }
+</script>
+{% endblock %}
