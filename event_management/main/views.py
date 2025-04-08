@@ -4,6 +4,17 @@ from django.shortcuts import render
 def home(request):
     return render(request, 'home.html')
     
+def signup(request):
+    return render(request, 'signup.html')
+
+
+def admin_signin(request):
+    return render(request, 'admin_signin.html')
+
+
+def signin(request):
+    return render(request, 'signin.html')
+   
 def admin_dashboard_view(request):
     return render(request, 'admin_dashboard.html')
 
