@@ -4,8 +4,16 @@ from django.urls import reverse
 class MainViewsTest(TestCase):
     def setUp(self):
         self.client = Client()
-
-
+    def test_admin_members_page(self):
+        url = reverse('admin_members')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'admin_members.html')
+    def test_admin_dashboard_page(self):
+        url = reverse('admin_dashboard')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'admin_dashboard.html')
     def test_admin_events_page(self):
         url = reverse('admin_events')
         response = self.client.get(url)
