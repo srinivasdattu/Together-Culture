@@ -1,0 +1,124 @@
+<!-- main/templates/admin_base.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Panel - {% block title %}{% endblock %}</title>
+  <style>
+    /* Put all your CSS from admin_dashboard.html here
+       (sidebar, topbar, global, etc.)
+       Or link to a separate CSS file if you prefer. */
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      display: flex;
+      min-height: 100vh;
+      background-color: #fafafa;
+      color: #333;
+    }
+    .sidebar {
+      width: 220px;
+      background-color: #fff;
+      border-right: 1px solid #eee;
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+    }
+    .sidebar .logo {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 2rem;
+    }
+    .sidebar ul {
+      list-style: none;
+      margin-top: 1rem;
+    }
+    .sidebar li {
+      margin-bottom: 1rem;
+    }
+    .sidebar a {
+      text-decoration: none;
+      color: #333;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+    .sidebar a:hover {
+      color: #666;
+    }
+
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 1rem 2rem;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+    .topbar h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    .search-container input {
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .profile-area {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .profile-pic {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      background-color: #ccc;
+    }
+    /* Any other shared CSS (cards, sections, etc.) goes here */
+
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="logo">AdminPanel</div>
+    <ul>
+      <li><a href="{% url 'admin_dashboard' %}">Dashboard</a></li>
+      <li><a href="{% url 'admin_events' %}">Events</a></li>
+      <li><a href="{% url 'admin_members' %}">Members</a></li>
+      <li><a href="{% url 'home' %}">Logout</a></li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main">
+    <!-- Topbar -->
+    <div class="topbar">
+      <h2>{% block heading %}{% endblock %}</h2>
+      <div class="search-container">
+        <input type="text" placeholder="Search..." />
+      </div>
+      <div class="profile-area">
+        <div class="profile-pic"></div>
+        <span>Admin User</span>
+      </div>
+    </div>
+
+    <!-- Page-Specific Content -->
+    {% block content %}
+    {% endblock %}
+  </div>
+</body>
+</html>
