@@ -3,7 +3,9 @@ from django.shortcuts import render
 
 def home(request):
     return render(request, 'home.html')
-
+    
+def admin_dashboard_view(request):
+    return render(request, 'admin_dashboard.html')
 
 
 def admin_events_view(request):
