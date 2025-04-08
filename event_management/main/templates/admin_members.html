@@ -1,0 +1,150 @@
+{% extends 'admin_base.html' %}
+
+{% block title %}Members{% endblock %}
+
+{% block heading %}
+  Members Management
+{% endblock %}
+
+{% block content %}
+
+<!-- Filters Container -->
+<div class="filters-container" style="
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 2rem;
+">
+  <!-- Category Filter -->
+  <select
+    id="categorySelect"
+    style="padding: 0.5rem; font-size: 0.95rem; border: 1px solid #ccc; border-radius: 4px;">
+    <option value="">All Categories</option>
+    <option value="community-member">Community Member</option>
+    <option value="key-access">Key Access</option>
+    <option value="creative-workspace">Creative Workspace</option>
+  </select>
+
+  <!-- Login Status Filter -->
+  <label style="display: flex; align-items: center; gap: 0.5rem;">
+    <input
+      type="checkbox"
+      id="loginStatusCheckbox"
+      style="width: 16px; height: 16px;"
+    />
+    Active Only
+  </label>
+</div>
+
+<!-- Members List Container -->
+<div id="membersContainer" style="
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+">
+  <!-- JavaScript will populate member items here -->
+</div>
+
+<script>
+  const categorySelect = document.getElementById('categorySelect');
+  const loginStatusCheckbox = document.getElementById('loginStatusCheckbox');
+  const membersContainer = document.getElementById('membersContainer');
+
+  // Load members on page load & whenever filters change
+  window.addEventListener('DOMContentLoaded', loadMembers);
+  categorySelect.addEventListener('change', loadMembers);
+  loginStatusCheckbox.addEventListener('change', loadMembers);
+
+  async function loadMembers() {
+    let baseUrl = 'http://127.0.0.1:8010/admin/admin_members';
+
+    // Build query params
+    const params = [];
+    const selectedCategory = categorySelect.value; // e.g., "community-member"
+    const isActiveOnly = loginStatusCheckbox.checked; // boolean
+
+    if (selectedCategory) {
+      params.push(`category=${selectedCategory}`);
+    }
+    // Only send login_status if "Active Only" is checked
+    if (isActiveOnly) {
+      params.push('login_status=True');
+    }
+
+    let finalUrl = baseUrl;
+    if (params.length > 0) {
+      finalUrl += '?' + params.join('&');
+      // e.g. "http://127.0.0.1:8010/admin/admin_members?category=community-member&login_status=True"
+    }
+
+    try {
+      const res = await fetch(finalUrl);
+      if (!res.ok) {
+        console.error('Error fetching members:', res.statusText);
+        return;
+      }
+      const data = await res.json();
+      // data should be an array of member objects
+      renderMembers(data);
+    } catch (err) {
+      console.error('Error:', err);
+    }
+  }
+
+  function renderMembers(members) {
+    // Clear existing content
+    membersContainer.innerHTML = '';
+
+    // members is an array like:
+    // [
+    //   {
+    //     "created_at": "Sat, 05 Apr 2025 19:21:30 GMT",
+    //     "email": "satwikgattu@gmail.com",
+    //     "full_name": "satwik",
+    //     "login_status": true,
+    //     "membership_type": "community-member",
+    //     "password": "superadmin",
+    //     "user_id": 3,
+    //     "user_type": "member"
+    //   }
+    //   ...
+    // ]
+
+    members.forEach(member => {
+      const memberItem = document.createElement('div');
+      memberItem.style.backgroundColor = '#fff';
+      memberItem.style.border = '1px solid #eee';
+      memberItem.style.borderRadius = '4px';
+      memberItem.style.padding = '1rem';
+
+      // Create a clickable name that toggles more info
+      memberItem.innerHTML = `
+        <div
+          class="member-header"
+          style="cursor: pointer; font-weight: bold; margin-bottom: 0.5rem;"
+        >
+          ${member.full_name}
+        </div>
+        <div class="member-details" style="display: none;">
+          <p style="margin: 0.2rem 0;"><strong>Email:</strong> ${member.email}</p>
+          <p style="margin: 0.2rem 0;"><strong>Membership Type:</strong> ${member.membership_type}</p>
+          <p style="margin: 0.2rem 0;"><strong>Login Status:</strong> ${member.login_status ? 'Active' : 'Inactive'}</p>
+          <p style="margin: 0.2rem 0;"><strong>Created At:</strong> ${member.created_at}</p>
+        </div>
+      `;
+
+      const headerDiv = memberItem.querySelector('.member-header');
+      const detailsDiv = memberItem.querySelector('.member-details');
+
+      // Toggle details on name click
+      headerDiv.addEventListener('click', () => {
+        detailsDiv.style.display = (detailsDiv.style.display === 'none') ? 'block' : 'none';
+      });
+
+      membersContainer.appendChild(memberItem);
+    });
+  }
+</script>
+
+{% endblock %}
