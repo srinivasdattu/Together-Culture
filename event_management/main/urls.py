@@ -11,6 +11,9 @@ urlpatterns = [
     path('digital_events/', views.digital_content_view, name='digital_events'),
      path('admin_dashboard/', views.admin_dashboard_view, name='admin_dashboard'),
     path('admin_members/', views.admin_members_view, name='admin_members'),
+    path('signup/', views.signup, name='signup'),
+    path('signin/', views.signin, name='signin'),
+    path('admin_signin/', views.admin_signin, name='admin_signin'),
 ]
 
 if settings.DEBUG:
