@@ -38,6 +38,21 @@ class MainViewsTest(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'admin_members.html')
+    def test_dashboard_page(self):
+        url = reverse('dashboard')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'dashboard.html')
+    def test_member_profile_settings_page(self):
+        url = reverse('member_profile_settings')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'profile_settings.html')
+    def test_create_profile_page(self):
+        url = reverse('create_profile')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'create_profile.html')
     def test_admin_dashboard_page(self):
         url = reverse('admin_dashboard')
         response = self.client.get(url)
