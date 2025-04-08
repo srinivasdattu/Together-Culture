@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard</title>
+  <style>
+    /* Reset & Basic Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      display: flex;
+      min-height: 100vh;
+      background-color: #fafafa;
+      color: #333;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 220px;
+      background-color: #fff;
+      border-right: 1px solid #eee;
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+    }
+    .sidebar .logo {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 2rem;
+    }
+    .sidebar ul {
+      list-style: none;
+      margin-top: 1rem;
+    }
+    .sidebar li {
+      margin-bottom: 1rem;
+    }
+    .sidebar a {
+      text-decoration: none;
+      color: #333;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+    .sidebar a:hover {
+      color: #666;
+    }
+
+    /* Main Content Area */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 1rem 2rem;
+    }
+
+    /* Header / Topbar */
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+    .topbar h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    .search-container input {
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .profile-area {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .profile-pic {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      background-color: #ccc; /* Placeholder for an actual profile pic */
+    }
+
+    /* Dashboard Overview - Stats */
+    .dashboard-overview {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+    .stat-card {
+      background-color: #fff;
+      border: 1px solid #eee;
+      border-radius: 4px;
+      flex: 1 1 180px;
+      min-width: 180px;
+      padding: 1rem;
+      text-align: center;
+    }
+    .stat-card h3 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      color: #555;
+    }
+    .stat-card p {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    /* Content Sections */
+    .content-section {
+      background-color: #fff;
+      border: 1px solid #eee;
+      border-radius: 4px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    .content-section h3 {
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+    .recent-activity-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .activity-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+    .activity-item .name {
+      font-weight: bold;
+    }
+    .activity-item .time {
+      font-size: 0.85rem;
+      color: #777;
+    }
+    .activity-item .description {
+      font-size: 0.9rem;
+    }
+
+    /* Remove Member Activity & Event Participation (charts-container) */
+    /* Remove Add New Member and Quick Filters from design */
+    /* So we won't show those in the HTML at all. */
+
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="logo">AdminPanel</div>
+    <ul>
+      <li><a href="#" class="active">Dashboard</a></li>
+      <li><a href="{% url 'admin_events' %}">Events</a></li>
+      <li><a href="{% url 'admin_members' %}">Members</a></li>
+      <li><a href="{% url 'home' %}">Logout</a></li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main">
+    <!-- Topbar -->
+    <div class="topbar">
+      <h2>Dashboard Overview</h2>
+      <div class="search-container">
+        <input type="text" placeholder="Search..." />
+      </div>
+      <div class="profile-area">
+        <div class="profile-pic"></div>
+        <span>Admin User</span>
+      </div>
+    </div>
+
+    <!-- Dashboard Overview Stats (Populated via JS) -->
+    <div class="dashboard-overview">
+      <!-- We'll replace these placeholders with JS data -->
+      <div id="statTotalMembers" class="stat-card">
+        <h3>Total Members</h3>
+        <p>0</p>
+      </div>
+      <div id="statActiveEvents" class="stat-card">
+        <h3>Active Events</h3>
+        <p>0</p>
+      </div>
+      <div id="statNewSignups" class="stat-card">
+        <h3>New Sign-ups</h3>
+        <p>0</p>
+      </div>
+      <div id="statEngagementRate" class="stat-card">
+        <h3>Engagement Rate</h3>
+        <p>0%</p>
+      </div>
+    </div>
+
+    <!-- Recent Activity (Populated via JS) -->
+    <div class="content-section">
+      <h3>Recent Activity</h3>
+      <ul id="recentActivityList" class="recent-activity-list">
+        <!-- Filled by JavaScript -->
+      </ul>
+    </div>
+
+    <!-- Pending Approvals (Populated via JS) -->
+    <div class="content-section">
+      <h3>Pending Approvals</h3>
+      <div id="pendingApprovalsContainer" style="margin-top: 1rem;">
+        <!-- Populated by JS, one row per pending user -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // On page load, fetch dashboard info + pending users
+    window.addEventListener('DOMContentLoaded', async () => {
+      await loadDashboardData();
+      await loadPendingMembers();
+    });
+
+    // 1. Load Dashboard Stats & Recent Activity
+    async function loadDashboardData() {
+      const url = 'http://localhost:8010/dashboard';
+      try {
+        const res = await fetch(url, { method: 'GET' });
+        if (!res.ok) {
+          console.error('Error fetching dashboard data:', res.statusText);
+          return;
+        }
+        const data = await res.json();
+        // data example:
+        // {
+        //   "member_statistics": {
+        //       "active_members": 1,
+        //       "inactive_members": 0,
+        //       "pending_members": 0
+        //   },
+        //   "metrics": {
+        //       "active_events": 3,
+        //       "engagement_rate_this_month": 50.0,
+        //       "new_signups": 2,
+        //       "total_members": 1
+        //   },
+        //   "recent_activity": [
+        //       {
+        //           "activity_message": "joined the platform",
+        //           "activity_timestamp": "2025-04-06 11:58:54.054991",
+        //           "actor_name": "satwikgattu"
+        //       }
+        //   ]
+        // }
+
+        // Populate stat cards
+        document.querySelector('#statTotalMembers p').textContent     = data.metrics?.total_members ?? 0;
+        document.querySelector('#statActiveEvents p').textContent     = data.metrics?.active_events ?? 0;
+        document.querySelector('#statNewSignups p').textContent       = data.metrics?.new_signups ?? 0;
+        document.querySelector('#statEngagementRate p').textContent   =
+          data.metrics?.engagement_rate_this_month + '%' || '0%';
+
+        // Populate recent activity
+        const recentList = document.getElementById('recentActivityList');
+        recentList.innerHTML = ''; // clear old
+        (data.recent_activity || []).forEach(act => {
+          const li = document.createElement('li');
+          li.className = 'activity-item';
+          li.innerHTML = `
+            <div class="name">${act.actor_name}</div>
+            <div class="time">${timeAgo(act.activity_timestamp)}</div>
+            <div class="description">${act.activity_message}</div>
+          `;
+          recentList.appendChild(li);
+        });
+      } catch (err) {
+        console.error('Error:', err);
+      }
+    }
+
+    // 2. Load Pending Members
+    async function loadPendingMembers() {
+      const url = 'http://localhost:8010/users/pending';
+      try {
+        const res = await fetch(url, { method: 'GET' });
+        if (!res.ok) {
+          console.error('Error fetching pending members:', res.statusText);
+          return;
+        }
+        const data = await res.json(); // array of pending users
+        // e.g. [
+        //   {
+        //     "created_at": "Sun, 06 Apr 2025 11:58:54 GMT",
+        //     "email": "satwikgattu@gmail.com",
+        //     "full_name": "satwikgattu",
+        //     "membership_plan_id": 3,
+        //     "password": "superadmin",
+        //     "status": "pending",
+        //     "user_id": 6,
+        //     "user_type": "member"
+        //   }
+        // ]
+
+        const container = document.getElementById('pendingApprovalsContainer');
+        container.innerHTML = ''; // Clear old content
+
+        if (!data.length) {
+          container.innerHTML = '<p style="color:#777;">No pending members found.</p>';
+          return;
+        }
+
+        data.forEach(member => {
+          // Each row matches the existing design: name + "Community Member" text + decline/accept
+          const row = document.createElement('div');
+          row.style.display = 'flex';
+          row.style.justifyContent = 'space-between';
+          row.style.alignItems = 'center';
+          row.style.marginTop = '1rem';
+
+          const leftDiv = document.createElement('div');
+          leftDiv.innerHTML = `
+            <strong>${member.full_name}</strong><br />
+            <span style="color: #777;">Status: ${member.status}</span>
+          `;
+
+          const btnContainer = document.createElement('div');
+          btnContainer.style.display = 'flex';
+          btnContainer.style.gap = '0.5rem';
+
+          // Decline button (if you want to handle decline logic)
+          const declineBtn = document.createElement('button');
+          declineBtn.textContent = 'Decline';
+          declineBtn.style.backgroundColor = '#f1f1f1';
+          declineBtn.style.border = '1px solid #ccc';
+          declineBtn.style.padding = '0.5rem';
+          declineBtn.style.borderRadius = '4px';
+          declineBtn.style.cursor = 'pointer';
+          declineBtn.addEventListener('click', () => {
+            updateMemberStatus(member.email, 'declined');
+          });
+
+          // Accept button
+          const acceptBtn = document.createElement('button');
+          acceptBtn.textContent = 'Accept';
+          acceptBtn.style.backgroundColor = '#000';
+          acceptBtn.style.color = '#fff';
+          acceptBtn.style.border = 'none';
+          acceptBtn.style.padding = '0.5rem';
+          acceptBtn.style.borderRadius = '4px';
+          acceptBtn.style.cursor = 'pointer';
+          acceptBtn.addEventListener('click', () => {
+            updateMemberStatus(member.email, 'approved');
+          });
+
+          btnContainer.appendChild(declineBtn);
+          btnContainer.appendChild(acceptBtn);
+
+          row.appendChild(leftDiv);
+          row.appendChild(btnContainer);
+
+          container.appendChild(row);
+        });
+      } catch (err) {
+        console.error('Error loading pending members:', err);
+      }
+    }
+
+    // 3. Approve/Decline a pending member
+    async function updateMemberStatus(email, newStatus) {
+      const url = `http://localhost:8010/users/email/${encodeURIComponent(email)}`;
+      const payload = { status: newStatus };
+      try {
+        const res = await fetch(url, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        if (!res.ok) {
+          console.error('Error updating member status:', res.statusText);
+          alert('Failed to update status. Please try again.');
+          return;
+        }
+        alert(`Status updated to ${newStatus} for ${email}`);
+        // Reload pending list
+        loadPendingMembers();
+      } catch (err) {
+        console.error('Error updating member:', err);
+        alert('Failed to update status. Please try again.');
+      }
+    }
+
+    // Helper: convert timestamp to something like "2 hours ago" (simple approximation)
+    function timeAgo(timestamp) {
+      try {
+        const then = new Date(timestamp);
+        const now = new Date();
+        const diffMs = now - then;
+        const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+        if (diffHours < 1) return 'Just now';
+        if (diffHours === 1) return '1 hour ago';
+        if (diffHours < 24) return `${diffHours} hours ago`;
+        const diffDays = Math.floor(diffHours / 24);
+        if (diffDays === 1) return 'Yesterday';
+        return `${diffDays} days ago`;
+      } catch {
+        return timestamp;
+      }
+    }
+  </script>
+
+</body>
+</html>
