@@ -4,6 +4,35 @@ from django.urls import reverse
 class MainViewsTest(TestCase):
     def setUp(self):
         self.client = Client()
+    def test_home_page(self):
+        """
+        Ensure the home page loads and uses the correct template.
+        """
+        url = reverse('home')  # name='home' in main/urls.py
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'home.html')
+
+    def test_signup_page(self):
+        """
+        Ensure the signup page loads and uses the correct template.
+        """
+        url = reverse('signup')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'signup.html')
+
+    def test_signin_page(self):
+        url = reverse('signin')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'signin.html')
+
+    def test_admin_signin_page(self):
+        url = reverse('admin_signin')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'admin_signin.html')       
     def test_admin_members_page(self):
         url = reverse('admin_members')
         response = self.client.get(url)
